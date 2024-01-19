@@ -7,18 +7,67 @@
     "text": "This is the first post in my Quarto blog. Welcome!\n\nThis is a photo I took in Kauai, Hawaii this past summer."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Myblog",
+    "objectID": "posts/hw0/index.html",
+    "href": "posts/hw0/index.html",
+    "title": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset",
     "section": "",
-    "text": "Welcome To My Blog!\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 16, 2024\n\n\nGianna Pedroza\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 11, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\nNo matching items"
+    "text": "Data visualization is an important skill for understanding and drawing insight from datasets. The Palmer Penguins dataset contains data on 344 penguins of three different species within the Palmer Archipelago in Antarctica. In this tutorial, we will explore how to create an interesting data visualization pf the Palmer Penguins dataset using Python."
+  },
+  {
+    "objectID": "posts/hw0/index.html#step-1-import-libraries-and-load-the-dataset",
+    "href": "posts/hw0/index.html#step-1-import-libraries-and-load-the-dataset",
+    "title": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset",
+    "section": "Step 1: Import Libraries and Load the Dataset",
+    "text": "Step 1: Import Libraries and Load the Dataset\nimport pandas as pd\nimport matplotlib.pyplot as plt\nurl = \"https://raw.githubusercontent.com/pic16b-ucla/24W/main/datasets/palmer_penguins.csv\"\npenguins = pd.read_csv(url)\nWe want to import the pandas library in order to create a Dataframe class object containing all of the information from the palmer_penguins.csv file that we are downloading directly from the given url. Then, we need matplotlib in order to create our visualization. Other libraries can be used for visualizing the data besides matplotlib, but this is the most well known.\nAdditionally we want to add names for the columns:\ncols = [\"Species\", \"Island\", \"Sex\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\", \"Flipper Length (mm)\", \"Body Mass (g)\"]\npenguins = penguins[cols]"
+  },
+  {
+    "objectID": "posts/hw0/index.html#step-2-explore-and-clean-the-data",
+    "href": "posts/hw0/index.html#step-2-explore-and-clean-the-data",
+    "title": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset",
+    "section": "Step 2: Explore and Clean the Data",
+    "text": "Step 2: Explore and Clean the Data\n\nStep A:\nFirst we want to simply take a look at the database we have created in order to determine if any rows pr columns need to be cleaned.\n#| label: tbl-pinguinos\n#| tbl-cap: Penguins Dataframe\npenguins.head()\n\n\nStep B:\nThen we need to clean out any empty datapoints using the dropna method, and we want to make the dataframe easier to read by simplifying the species name.\n#| label: tbl-pinguinos\n#| tbl-cap: Penguins Dataframe\npenguins = penguins.dropna(subset = [\"Body Mass (g)\", \"Sex\"])\npenguins[\"Species\"] = penguins[\"Species\"].str.split().str.get(0)\npenguins.head()"
+  },
+  {
+    "objectID": "posts/hw0/index.html#step-3-choose-an-appropriate-method-of-visualization",
+    "href": "posts/hw0/index.html#step-3-choose-an-appropriate-method-of-visualization",
+    "title": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset",
+    "section": "Step 3: Choose an Appropriate Method of Visualization",
+    "text": "Step 3: Choose an Appropriate Method of Visualization"
+  },
+  {
+    "objectID": "posts/hw0/index.html#step-4-customize-and-enhance-the-visaulization",
+    "href": "posts/hw0/index.html#step-4-customize-and-enhance-the-visaulization",
+    "title": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset",
+    "section": "Step 4: Customize and Enhance the Visaulization",
+    "text": "Step 4: Customize and Enhance the Visaulization"
+  },
+  {
+    "objectID": "posts/hw0/index.html#step-5-analyze-the-visualization",
+    "href": "posts/hw0/index.html#step-5-analyze-the-visualization",
+    "title": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset",
+    "section": "Step 5: Analyze the Visualization",
+    "text": "Step 5: Analyze the Visualization"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "Gianna Pedroza",
     "section": "",
-    "text": "About this blog"
+    "text": "University of California, Los Angeles | Los Angeles, CA B.S. in Applied Mathematics, Data Science Engineering Minor | Sept 2021 - Present"
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "Gianna Pedroza",
+    "section": "",
+    "text": "University of California, Los Angeles | Los Angeles, CA B.S. in Applied Mathematics, Data Science Engineering Minor | Sept 2021 - Present"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Myblog",
+    "section": "",
+    "text": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset\n\n\n\n\n\n\nweek 0\n\n\nexample\n\n\n\n\n\n\n\n\n\nJan 17, 2024\n\n\nGianna Pedroza\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog!\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 16, 2024\n\n\nGianna Pedroza\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 11, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",

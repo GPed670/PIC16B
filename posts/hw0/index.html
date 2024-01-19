@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Gianna Pedroza">
-<meta name="dcterms.date" content="2024-01-16">
+<meta name="dcterms.date" content="2024-01-17">
 
-<title>Myblog - Welcome To My Blog!</title>
+<title>Myblog - Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,9 +110,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Welcome To My Blog!</h1>
+      <h1 class="title">Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">week 0</div>
+                <div class="quarto-category">example</div>
               </div>
                   </div>
   </div>
@@ -130,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 16, 2024</p>
+        <p class="date">January 17, 2024</p>
       </div>
     </div>
     
@@ -149,11 +150,49 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This is the first post in my Quarto blog. Welcome!</p>
-<p><img src="thumbnail.jpg" class="img-fluid"></p>
-<p>This is a photo I took in Kauai, Hawaii this past summer.</p>
+<p>Data visualization is an important skill for understanding and drawing insight from datasets. The Palmer Penguins dataset contains data on 344 penguins of three different species within the Palmer Archipelago in Antarctica. In this tutorial, we will explore how to create an interesting data visualization pf the Palmer Penguins dataset using Python.</p>
+<p><img src="Iter_penguins.png" class="img-fluid"></p>
+<section id="step-1-import-libraries-and-load-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-import-libraries-and-load-the-dataset">Step 1: Import Libraries and Load the Dataset</h2>
+<pre class="{python}"><code>import pandas as pd
+import matplotlib.pyplot as plt
+url = "https://raw.githubusercontent.com/pic16b-ucla/24W/main/datasets/palmer_penguins.csv"
+penguins = pd.read_csv(url)</code></pre>
+<p>We want to import the pandas library in order to create a Dataframe class object containing all of the information from the palmer_penguins.csv file that we are downloading directly from the given url. Then, we need matplotlib in order to create our visualization. Other libraries can be used for visualizing the data besides matplotlib, but this is the most well known.</p>
+<p>Additionally we want to add names for the columns:</p>
+<pre class="{python}"><code>cols = ["Species", "Island", "Sex", "Culmen Length (mm)", "Culmen Depth (mm)", "Flipper Length (mm)", "Body Mass (g)"]
+penguins = penguins[cols]</code></pre>
+</section>
+<section id="step-2-explore-and-clean-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-explore-and-clean-the-data">Step 2: Explore and Clean the Data</h2>
+<section id="step-a" class="level3">
+<h3 class="anchored" data-anchor-id="step-a">Step A:</h3>
+<p>First we want to simply take a look at the database we have created in order to determine if any rows pr columns need to be cleaned.</p>
+<pre class="{python}"><code>#| label: tbl-pinguinos
+#| tbl-cap: Penguins Dataframe
+penguins.head()</code></pre>
+</section>
+<section id="step-b" class="level3">
+<h3 class="anchored" data-anchor-id="step-b">Step B:</h3>
+<p>Then we need to clean out any empty datapoints using the dropna method, and we want to make the dataframe easier to read by simplifying the species name.</p>
+<pre class="{python}"><code>#| label: tbl-pinguinos
+#| tbl-cap: Penguins Dataframe
+penguins = penguins.dropna(subset = ["Body Mass (g)", "Sex"])
+penguins["Species"] = penguins["Species"].str.split().str.get(0)
+penguins.head()</code></pre>
+</section>
+</section>
+<section id="step-3-choose-an-appropriate-method-of-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-choose-an-appropriate-method-of-visualization">Step 3: Choose an Appropriate Method of Visualization</h2>
+</section>
+<section id="step-4-customize-and-enhance-the-visaulization" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-customize-and-enhance-the-visaulization">Step 4: Customize and Enhance the Visaulization</h2>
+</section>
+<section id="step-5-analyze-the-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-analyze-the-visualization">Step 5: Analyze the Visualization</h2>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
