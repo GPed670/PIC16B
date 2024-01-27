@@ -7,6 +7,48 @@
     "text": "This is the first post in my Quarto blog. Welcome!\n\nThis is a photo I took in Kauai, Hawaii this past summer."
   },
   {
+    "objectID": "posts/hw1/index.html",
+    "href": "posts/hw1/index.html",
+    "title": "Homework 1: Data Wrangling and Visualization using NOAA Climate Data",
+    "section": "",
+    "text": "import pandas as pd\nimport sqlite3"
+  },
+  {
+    "objectID": "posts/hw1/index.html#visualization-1-average-temperature-over-time",
+    "href": "posts/hw1/index.html#visualization-1-average-temperature-over-time",
+    "title": "Homework 1: Data Wrangling and Visualization using NOAA Climate Data",
+    "section": "Visualization 1: Average Temperature Over Time",
+    "text": "Visualization 1: Average Temperature Over Time\n\ndef avgTemp_over_time(db_file, country, year_begin, year_end):\n    # Connect to the SQLite database\n    conn = sqlite3.connect(db_file)\n    \n    query = f\"\"\"\n        SELECT t.Year, AVG(t.Temp) AS avg_temp\n        FROM temperatures t\n        LEFT JOIN stations s ON t.ID = s.ID\n        LEFT JOIN countries c ON t.ID LIKE c.\"FIPS 10-4\" || '%'\n        WHERE c.Name = '{country}' AND Year BETWEEN {year_begin} AND {year_end}\n        GROUP BY year\n    \"\"\"\n    \n    # Execute the query and fetch the results into a Pandas DataFrame\n    df = pd.read_sql_query(query, conn)\n    conn.close()\n    \n    return df\n\ndef average_temperature_line_plot(db_file, country, year_begin, year_end):\n    # Get data using the query function\n    data = avgTemp_over_time(db_file, country, year_begin, year_end)\n\n    # Create line plot with facets using Plotly Express\n    fig = px.line(data, \n                  x='Year', \n                  y='avg_temp',\n                  labels={'avg_temp': 'Average Temperature (°C)'},\n                  title=f'Average Temperature Over Time in {country} ({year_begin}-{year_end})')\n\n    return fig\n\n\nfig_line = average_temperature_line_plot(\"climate.db\", \"Thailand\", 1980, 2020)\nfig_line.show()"
+  },
+  {
+    "objectID": "posts/hw1/index.html#visualization-2-bar-chart-of-average-temperatures-each-month",
+    "href": "posts/hw1/index.html#visualization-2-bar-chart-of-average-temperatures-each-month",
+    "title": "Homework 1: Data Wrangling and Visualization using NOAA Climate Data",
+    "section": "Visualization 2: Bar Chart of Average Temperatures Each Month",
+    "text": "Visualization 2: Bar Chart of Average Temperatures Each Month\n\ndef avg_monthly_temperature_bar_chart(db_file, country, year_begin, year_end):\n    # Connect to the SQLite database\n    conn = sqlite3.connect(db_file)\n\n    query = f\"\"\"\n        SELECT t.Month, AVG(t.Temp) AS avg_temp\n        FROM temperatures t\n        LEFT JOIN stations s ON t.ID = s.ID\n        LEFT JOIN countries c ON t.ID LIKE c.\"FIPS 10-4\" || '%'\n        WHERE c.Name = '{country}' AND Year BETWEEN {year_begin} AND {year_end}\n        GROUP BY t.Month\n    \"\"\"\n\n    # Execute the query and fetch the results into a Pandas DataFrame\n    df = pd.read_sql_query(query, conn)\n    conn.close()\n\n    # Map month numbers to month names for better visualization\n    month_mapping = {\n        1: 'January', 2: 'February', 3: 'March', 4: 'April',\n        5: 'May', 6: 'June', 7: 'July', 8: 'August',\n        9: 'September', 10: 'October', 11: 'November', 12: 'December'\n    }\n    df['Month'] = df['Month'].map(month_mapping)\n\n    # Create a bar chart using Plotly\n    fig = px.bar(df, \n                 x='Month', \n                 y='avg_temp',\n                 labels={'avg_temp': 'Average Temperature (°C)'},\n                 title=f'Average Monthly Temperature in {country} ({year_begin}-{year_end})',\n                 color='avg_temp',\n                 color_continuous_scale='RdBu_r')\n\n    return fig\n\nIn summary, this script connects to our SQLite database, fetches average monthly temperature data for a specified country and year range, and creates an interactive bar chart using Plotly, where the color of each bar represents the temperature value. The resulting visualization provides an representation of how average monthly temperatures vary over time for the selected country.\nThis visualization could help answer the question “How does the average monthly temperature vary over the specified years for a particular country?” This visualization provides insights into the monthly temperature patterns for a given country, allowing users to observe the seasonal temperature changes. By examining the color of the bars, viewers can identify periods of higher or lower average temperatures throughout the specified time range.\nBelow is an example for the function in use to find the average temperatures of each month in Finland between 2000 and 2020:\n\nfig = avg_monthly_temperature_bar_chart('climate.db', 'Finland', 2000, 2020)\nfig.show()"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Myblog",
+    "section": "",
+    "text": "Homework 1: Data Wrangling and Visualization using NOAA Climate Data\n\n\n\n\n\n\nweek 3\n\n\nhomework\n\n\n\n\n\n\n\n\n\nJan 25, 2024\n\n\nGianna Pedroza\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial: Constructing a Data Visualization of the Palmer Penguins Dataset\n\n\n\n\n\n\nweek 0\n\n\nexample\n\n\n\n\n\n\n\n\n\nJan 17, 2024\n\n\nGianna Pedroza\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog!\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 16, 2024\n\n\nGianna Pedroza\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 11, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Gianna Pedroza",
+    "section": "",
+    "text": "University of California, Los Angeles | Los Angeles, CA B.S. in Applied Mathematics, Data Science Engineering Minor | Sept 2021 - Present"
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "Gianna Pedroza",
+    "section": "",
+    "text": "University of California, Los Angeles | Los Angeles, CA B.S. in Applied Mathematics, Data Science Engineering Minor | Sept 2021 - Present"
+  },
+  {
     "objectID": "posts/hw0/index.html",
     "href": "posts/hw0/index.html",
     "title": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset",
@@ -40,27 +82,6 @@
     "title": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset",
     "section": "Conclusion",
     "text": "Conclusion\nOverall, you can make many different types of interesting visualization from this dataset that can help you draw different insight. Choosing the right visualization depends on what you’re trying to find, and there are many different libraries and graphs that can help you with that. Once your visualization is created, interpret the results and analyze any patterns or trends observed from the visualization. Feel free to experiment with other types of visualizations and variables from the dataset to create a comprehensive understanding of the data. Remember to share your findings and insights in a clear and concise manner by making your visualizations easy to read and visibly satisfying. Data visualization is not only about creating beautiful plots but also about effectively communicating information."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Gianna Pedroza",
-    "section": "",
-    "text": "University of California, Los Angeles | Los Angeles, CA B.S. in Applied Mathematics, Data Science Engineering Minor | Sept 2021 - Present"
-  },
-  {
-    "objectID": "about.html#education",
-    "href": "about.html#education",
-    "title": "Gianna Pedroza",
-    "section": "",
-    "text": "University of California, Los Angeles | Los Angeles, CA B.S. in Applied Mathematics, Data Science Engineering Minor | Sept 2021 - Present"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Myblog",
-    "section": "",
-    "text": "Tutorial: Constructing a Data Visualization of the Palmer Penguins Dataset\n\n\n\n\n\n\nweek 0\n\n\nexample\n\n\n\n\n\n\n\n\n\nJan 17, 2024\n\n\nGianna Pedroza\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog!\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 16, 2024\n\n\nGianna Pedroza\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 11, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",
