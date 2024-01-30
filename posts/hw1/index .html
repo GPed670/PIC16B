@@ -544,13 +544,7 @@ CREATE TABLE "countries" (
 <section id="part-2" class="level1">
 <h1>Part 2:</h1>
 <p>The query_climate_database function is designed to retrieve climate data for a specific country, month, and year range from our database. This way users can gather information such as temperature readings from different stations within the specified country and time frame. This function utilizes SQL queries to extract relevant information from the “temperatures,” “stations,” and “countries” tables, joining them based on the common identifier of the FIPS 10-4 country code that is in the station ID.</p>
-<p>The function takes four parameters:</p>
-<ul>
-<li><p>db_file: The file path to the database containing climate data.</p></li>
-<li><p>country: The name of the country for which climate data is being queried.</p></li>
-<li><p>year_begin and year_end: The range of years for which climate data is requested.</p></li>
-<li><p>month: The specific month for which climate data is needed.</p></li>
-</ul>
+<p>The function takes four parameters: db_file, country, year_begin, year_end, month.</p>
 <div id="3601a4f2" class="cell" data-tags="[]" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> climate_database <span class="im">import</span> query_climate_database</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> inspect</span>
@@ -755,15 +749,7 @@ CREATE TABLE "countries" (
 <h3 class="anchored" data-anchor-id="explanation-of-compute_coefficient">Explanation of compute_coefficient:</h3>
 <p>The function starts by creating a linear regression model using the LinearRegression class from the scikit-learn library. It reshapes the input data to comply with the requirements of the linear regression model. The independent variable (X) is the ‘Year’ column, and the dependent variable (y) is the ‘Temp’ column. Then, the function fits the linear regression model to the data using the fit method. It retrieves the coefficient of the resulting regression line using the coef_ attribute of the model. Finally, the function returns the calculated linear regression coefficient.</p>
 <p>Now the temperature_coefficient_plot will use the compute_coefficient function to predict temperature measurements for the given country and dates. The temperature_coefficient_plot function is designed to visualize the estimated yearly increase in temperature for different weather stations within a specific country and month. The function uses data querying, linear regression coefficient calculation, and geographical plotting to provide insights into temperature trends.</p>
-<p>The function takes several parameters:</p>
-<ul>
-<li><p>db_file: The file path to the database containing climate data.</p></li>
-<li><p>country: The name of the country for which temperature estimates are being visualized.</p></li>
-<li><p>year_begin and year_end: The range of years for which climate data is considered.</p></li>
-<li><p>month: The specific month for which temperature estimates are needed.</p></li>
-<li><p>min_obs: The minimum number of years of data required for a station to be included in the analysis.</p></li>
-<li><p>**kwargs: Additional keyword arguments for customization, including color scale, zoom level, and map style.</p></li>
-</ul>
+<p>The function takes several parameters: db_file, country, year_begin, year_end, month, min_obs, kwargs. min_obs is the minimum number of years of data required for a station to be included in the analysis, and kwargs is additional keyword arguments for customization, including color scale, zoom level, and map style.</p>
 <div id="270b35eb-2a6b-42ae-b986-0fe3e61db848" class="cell" data-tags="[]" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
