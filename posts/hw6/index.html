@@ -194,19 +194,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Ahmed H, Traore I, Saad S. (2017) “Detection of Online Fake News Using N-Gram Analysis and Machine Learning Techniques. In: Traore I., Woungang I., Awad A. (eds) Intelligent, Secure, and Dependable Systems in Distributed and Cloud Environments. ISDDC 2017. Lecture Notes in Computer Science, vol 10618. Springer, Cham (pp.&nbsp;127-138).</p>
 <p>Which can be accessed through Kaggle. Each row of the data corresponds to an article with the title column giving the title of the article, and the text column giving the full article text. The fake column is 0 if the article is true and 1 if the article contains fake news.</p>
 <p>Before writing any code we need to import some essential libraries for our data manipulation and the creation of our models. Additionally, we will need to install and install and updated version of keras.</p>
-<div id="cell-2" class="cell" data-execution_count="97">
+<div id="cell-2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_datasets <span class="im">as</span> tfds</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-3" class="cell" data-outputid="f28d29bd-5f7a-4acd-c4b7-9e107af9be15">
+<div id="cell-3" class="cell" data-outputid="cb94073a-4f81-4943-a602-6693d389af14" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install keras <span class="op">--</span>upgrade</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Requirement already satisfied: keras in /usr/local/lib/python3.10/dist-packages (2.15.0)
 Collecting keras
   Downloading keras-3.0.5-py3-none-any.whl (1.0 MB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 6.2 MB/s eta 0:00:00
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 12.5 MB/s eta 0:00:00
 Requirement already satisfied: absl-py in /usr/local/lib/python3.10/dist-packages (from keras) (1.4.0)
 Requirement already satisfied: numpy in /usr/local/lib/python3.10/dist-packages (from keras) (1.25.2)
 Requirement already satisfied: rich in /usr/local/lib/python3.10/dist-packages (from keras) (13.7.1)
@@ -232,15 +232,15 @@ Successfully installed keras-3.0.5 namex-0.0.7</code></pre>
 </div>
 </div>
 <p>Next, we need to download our training set, using the url provided, to a pandas dataframe.</p>
-<div id="cell-5" class="cell" data-outputid="16403134-baad-414e-abf3-0e943712e5f5" data-execution_count="2">
+<div id="cell-5" class="cell" data-outputid="7a667f1f-4d5f-4fdb-bea9-416b3d53bdad" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>train_url <span class="op">=</span> <span class="st">"https://github.com/PhilChodrow/PIC16b/blob/master/datasets/fake_news_train.csv?raw=true"</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the CSV file into a DataFrame</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(train_url)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="3">
 
-  <div id="df-93b9a72e-eb1c-4028-942d-32de0105c1fd" class="colab-df-container">
+  <div id="df-b673555b-073c-438f-9496-ac1d24686e8f" class="colab-df-container">
     <div>
 
 
@@ -297,7 +297,7 @@ Successfully installed keras-3.0.5 namex-0.0.7</code></pre>
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-93b9a72e-eb1c-4028-942d-32de0105c1fd')" title="Convert this dataframe to an interactive table." style="display:none;">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-b673555b-073c-438f-9496-ac1d24686e8f')" title="Convert this dataframe to an interactive table." style="display:none;">
 
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
@@ -347,12 +347,12 @@ Successfully installed keras-3.0.5 namex-0.0.7</code></pre>
 
     <script>
       const buttonEl =
-        document.querySelector('#df-93b9a72e-eb1c-4028-942d-32de0105c1fd button.colab-df-convert');
+        document.querySelector('#df-b673555b-073c-438f-9496-ac1d24686e8f button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-93b9a72e-eb1c-4028-942d-32de0105c1fd');
+        const element = document.querySelector('#df-b673555b-073c-438f-9496-ac1d24686e8f');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -372,8 +372,8 @@ Successfully installed keras-3.0.5 namex-0.0.7</code></pre>
   </div>
 
 
-<div id="df-d3730dda-a06f-42f4-bd2a-b27c95e58296">
-  <button class="colab-df-quickchart" onclick="quickchart('df-d3730dda-a06f-42f4-bd2a-b27c95e58296')" title="Suggest charts" style="display:none;">
+<div id="df-2d78e10a-40fb-4f73-a024-ace5fc842796">
+  <button class="colab-df-quickchart" onclick="quickchart('df-2d78e10a-40fb-4f73-a024-ace5fc842796')" title="Suggest charts" style="display:none;">
 
 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
     <g>
@@ -489,7 +489,7 @@ Successfully installed keras-3.0.5 namex-0.0.7</code></pre>
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-d3730dda-a06f-42f4-bd2a-b27c95e58296 button');
+        document.querySelector('#df-2d78e10a-40fb-4f73-a024-ace5fc842796 button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -501,74 +501,84 @@ Successfully installed keras-3.0.5 namex-0.0.7</code></pre>
 </div>
 <p>In order to clean our data for easier processing we want to remove unnecessary words like “and”, “or”, and “the” that don’t contribute much to the meaning of the text. We also want to make everything lowercase. Finally we want to put our dataframe into a tensorflow Dataset object. We can do all of this by defining a function make_dataset:</p>
 <p>Additionally, we can easily import a list of stopwords using the snipet bellow.</p>
-<div id="cell-7" class="cell" data-execution_count="7">
+<div id="cell-7" class="cell" data-outputid="86355a59-8912-4067-a94b-e455efd0822b" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'stopwords'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[nltk_data] Downloading package stopwords to /root/nltk_data...
+[nltk_data]   Unzipping corpora/stopwords.zip.</code></pre>
 </div>
-<div id="cell-8" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_dataset(df):</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Preprocesses the input DataFrame for text classification.</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    - df (pd.DataFrame): DataFrame containing 'title', 'text', and 'fake' columns.</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">    - tf.data.Dataset: A TensorFlow Dataset containing preprocessed text and label tensors.</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Make text all lowercase</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'text'</span>] <span class="op">=</span> df[<span class="st">'text'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.lower())</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove stopwords</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    stop <span class="op">=</span> stopwords.words(<span class="st">'english'</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'text'</span>] <span class="op">=</span> df[<span class="st">'text'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">' '</span>.join([word <span class="cf">for</span> word <span class="kw">in</span> x.split() <span class="cf">if</span> word <span class="kw">not</span> <span class="kw">in</span> (stop)]))</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Make a tf Dataset</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    title_tensor <span class="op">=</span> tf.constant(df[<span class="st">'title'</span>].values, dtype<span class="op">=</span>tf.string)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    text_tensor <span class="op">=</span> tf.constant(df[<span class="st">'text'</span>].values, dtype<span class="op">=</span>tf.string)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    fake_tensor <span class="op">=</span> tf.constant(df[<span class="st">'fake'</span>].values, dtype<span class="op">=</span>tf.int32)</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    dataset <span class="op">=</span> tf.data.Dataset.from_tensor_slices(({<span class="st">"title"</span>: title_tensor, <span class="st">"text"</span>: text_tensor}, fake_tensor))</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Batch the dataset</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    dataset <span class="op">=</span> dataset.batch(<span class="dv">100</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>True</code></pre>
 </div>
-<div id="cell-9" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> make_dataset(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="116">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_dataset(df):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Preprocesses the input DataFrame for text classification.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">    - df (pd.DataFrame): DataFrame containing 'title', 'text', and 'fake' columns.</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    - tf.data.Dataset: A TensorFlow Dataset containing preprocessed text and label tensors.</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Make text all lowercase</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'text'</span>] <span class="op">=</span> df[<span class="st">'text'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.lower())</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'title'</span>] <span class="op">=</span> df[<span class="st">'title'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.lower())</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove stopwords</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    stop <span class="op">=</span> stopwords.words(<span class="st">'english'</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'text'</span>] <span class="op">=</span> df[<span class="st">'text'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">' '</span>.join([word <span class="cf">for</span> word <span class="kw">in</span> x.split() <span class="cf">if</span> word <span class="kw">not</span> <span class="kw">in</span> (stop)]))</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'title'</span>] <span class="op">=</span> df[<span class="st">'title'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">' '</span>.join([word <span class="cf">for</span> word <span class="kw">in</span> x.split() <span class="cf">if</span> word <span class="kw">not</span> <span class="kw">in</span> (stop)]))</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Make a tf Dataset</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    title_tensor <span class="op">=</span> tf.constant(df[<span class="st">'title'</span>].values, dtype<span class="op">=</span>tf.string)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    text_tensor <span class="op">=</span> tf.constant(df[<span class="st">'text'</span>].values, dtype<span class="op">=</span>tf.string)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    fake_tensor <span class="op">=</span> tf.constant(df[<span class="st">'fake'</span>].values, dtype<span class="op">=</span>tf.int32)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    dataset <span class="op">=</span> tf.data.Dataset.from_tensor_slices(({<span class="st">"title"</span>: title_tensor, <span class="st">"text"</span>: text_tensor}, fake_tensor))</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Batch the dataset</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    dataset <span class="op">=</span> dataset.batch(<span class="dv">100</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="117">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> make_dataset(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we want to split the dataset into a training set and a validation set with a 80-20 ratio. We can do this by using the take and skip methods of the tensorflow Dataset object. When passed a number n, take will take only the first n items in the dataset, and skip will skip the first n items.</p>
-<div id="cell-11" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shuffle the data and determine the validation set size</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> ds.shuffle(buffer_size <span class="op">=</span> <span class="bu">len</span>(ds), reshuffle_each_iteration<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>val_size <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.2</span> <span class="op">*</span> <span class="bu">len</span>(ds))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>val <span class="op">=</span> ds.take(val_size)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> ds.skip(val_size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-11" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shuffle the data and determine the validation set size</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> ds.shuffle(buffer_size <span class="op">=</span> <span class="bu">len</span>(ds), reshuffle_each_iteration<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>val_size <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.2</span> <span class="op">*</span> <span class="bu">len</span>(ds))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>val <span class="op">=</span> ds.take(val_size)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> ds.skip(val_size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-12" class="cell" data-outputid="884de95c-3790-446e-9830-929b14a7a71e" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(train), <span class="bu">len</span>(val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div id="cell-12" class="cell" data-outputid="b1991b3e-ffe8-46d9-eb51-7476471a3bd4" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(train), <span class="bu">len</span>(val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>(180, 45)</code></pre>
 </div>
 </div>
 <p>In order to get a good idea of the performance of our machine learning models we can compare them to the base rate. The base rate provides a baseline understanding of the distribution of fake news. We can calculate the base rate by comparing the number of fake vs true articles.</p>
-<div id="cell-14" class="cell" data-outputid="917a75db-a925-44d9-d854-7e70dd718d58" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fake_count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>total_count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, labels <span class="kw">in</span> train:</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    fake_count <span class="op">+=</span> tf.reduce_sum(labels).numpy()  <span class="co"># Sum of 0s and 1s where 1 represents 'fake'</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    total_count <span class="op">+=</span> <span class="bu">len</span>(labels)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>base_rate <span class="op">=</span> fake_count <span class="op">/</span> total_count</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Base rate:"</span>, base_rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-14" class="cell" data-outputid="17cb20d8-985e-43ec-f043-b675fd088c57" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fake_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>total_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, labels <span class="kw">in</span> train:</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    fake_count <span class="op">+=</span> tf.reduce_sum(labels).numpy()  <span class="co"># Sum of 0s and 1s where 1 represents 'fake'</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    total_count <span class="op">+=</span> <span class="bu">len</span>(labels)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>base_rate <span class="op">=</span> fake_count <span class="op">/</span> total_count</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Base rate:"</span>, base_rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Base rate: 0.5240403365089977</code></pre>
+<pre><code>Base rate: 0.5254331717644437</code></pre>
 </div>
 </div>
 <p>As we can see a random guess would have around a 52% probability of being correct in determining if an article is fake or not.</p>
@@ -579,34 +589,34 @@ Successfully installed keras-3.0.5 namex-0.0.7</code></pre>
 <p>In order to answer this question we will be using the Functional API. The Functional API allows you to define models with complex multiple inputs and outputs, shared layers, and non-linear connectivity patterns. These features are essential for the three models we want to create using our dataset</p>
 <p>To start off, understanding and representing textual data in a machine-readable format is an important initial step for text classification. We can use TextVectorization layer in TensorFlow to achieve this.</p>
 <p>To use TextVectorization we must first import these functions.</p>
-<div id="cell-17" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> keras</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras <span class="im">import</span> layers, losses</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> TextVectorization</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-17" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> keras</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras <span class="im">import</span> layers, losses</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> TextVectorization</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-18" class="cell" data-execution_count="50">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#preparing a text vectorization layer for tf model</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>size_vocabulary <span class="op">=</span> <span class="dv">2000</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> standardization(input_data):</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    lowercase <span class="op">=</span> tf.strings.lower(input_data)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    no_punctuation <span class="op">=</span> tf.strings.regex_replace(lowercase,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">'[</span><span class="sc">%s</span><span class="st">]'</span> <span class="op">%</span> re.escape(string.punctuation),<span class="st">''</span>)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> no_punctuation</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>vectorize_layer <span class="op">=</span> TextVectorization(</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    standardize<span class="op">=</span>standardization,</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span>size_vocabulary, <span class="co"># only consider this many words</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    output_mode<span class="op">=</span><span class="st">'int'</span>,</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    output_sequence_length<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>vectorize_layer.adapt(train.<span class="bu">map</span>(<span class="kw">lambda</span> x, y: x[<span class="st">"title"</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-18" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#preparing a text vectorization layer for tf model</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>size_vocabulary <span class="op">=</span> <span class="dv">2000</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> standardization(input_data):</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    lowercase <span class="op">=</span> tf.strings.lower(input_data)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    no_punctuation <span class="op">=</span> tf.strings.regex_replace(lowercase,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">'[</span><span class="sc">%s</span><span class="st">]'</span> <span class="op">%</span> re.escape(string.punctuation),<span class="st">''</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> no_punctuation</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>vectorize_layer <span class="op">=</span> TextVectorization(</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    standardize<span class="op">=</span>standardization,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span>size_vocabulary, <span class="co"># only consider this many words</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    output_mode<span class="op">=</span><span class="st">'int'</span>,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    output_sequence_length<span class="op">=</span><span class="dv">500</span>)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>vectorize_layer.adapt(train.<span class="bu">map</span>(<span class="kw">lambda</span> x, y: x[<span class="st">"title"</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The standardization function within the TextVectorization layer converts text to lowercase and removes punctuation, offering a uniform representation that lessens the impact of irrelevant information in the dataset. TextVectorization also building a vocabulary from the training data. This vocabulary is limited to a specified number of tokens, providing a manageable structure to help control complexity and prevent overfitting.</p>
-<div id="cell-20" class="cell" data-execution_count="57">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>shared_embedding_layer <span class="op">=</span> layers.Embedding(size_vocabulary, <span class="dv">3</span>, name<span class="op">=</span><span class="st">"embedding"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-20" class="cell" data-execution_count="77">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>shared_embedding_layer <span class="op">=</span> layers.Embedding(size_vocabulary, <span class="dv">10</span>, name<span class="op">=</span><span class="st">"embedding"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We also must add this embedding layer. The Embedding layer is a transformer that converts words into dense vectors, known as word embeddings. These vectors encode semantic relationships and contextual information, providing a representation of words within the vocabulary.</p>
 <p>Both of these layers will be shared layers for both of our inputs, title and text, thanks to our use of the Functional API.</p>
@@ -615,67 +625,84 @@ Successfully installed keras-3.0.5 namex-0.0.7</code></pre>
 <p>In this TensorFlow Keras model designed for text classification, the Functional API is employed to construct a neural network architecture for discerning between real and fake news based on input titles.</p>
 <p>The model begins with an input layer, ‘title_input,’ representing the titles of the texts and specifying what it expects for its input. The next steps involve using text vectorization, converting the titles into integer sequences using the shared vectorization layer from before. The shared embedding layer is then applied to transform these integer-encoded words into dense vectors, allowing the model to capture relationships between words.</p>
 <p>Next, Dropout layers are strategically inserted to mitigate overfitting, and Global average pooling ensures a fixed-length output, regardless of input length for generalization. Then a series of Dense layers are used.</p>
-<div id="cell-23" class="cell" data-outputid="26c5de6b-04f8-4d57-a757-44a10530a245" data-execution_count="98">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming you have already defined the title_input</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>title_input <span class="op">=</span> tf.keras.Input(shape<span class="op">=</span>(<span class="dv">1</span>,), dtype<span class="op">=</span>tf.string, name<span class="op">=</span><span class="st">"title"</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the model for title input</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> vectorize_layer(title_input)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> shared_embedding_layer(title_features)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.Dropout(<span class="fl">0.5</span>)(title_features)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.GlobalAveragePooling1D()(title_features)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(title_features)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.Dropout(<span class="fl">0.3</span>)(title_features)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(title_features)</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the output layer for title input</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>title_output <span class="op">=</span> layers.Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>, name<span class="op">=</span><span class="st">"title_output"</span>)(title_features)</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the model</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>model1 <span class="op">=</span> tf.keras.Model(inputs<span class="op">=</span>title_input, outputs<span class="op">=</span>title_output)</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>model1.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Model: "model_19"
-_________________________________________________________________
- Layer (type)                Output Shape              Param #   
-=================================================================
- title (InputLayer)          [(None, 1)]               0         
-                                                                 
- text_vectorization_1 (Text  (None, 500)               0         
- Vectorization)                                                  
-                                                                 
- embedding (Embedding)       (None, 500, 3)            6000      
-                                                                 
- dropout_30 (Dropout)        (None, 500, 3)            0         
-                                                                 
- global_average_pooling1d_1  (None, 3)                 0         
- 3 (GlobalAveragePooling1D)                                      
-                                                                 
- dense_24 (Dense)            (None, 64)                256       
-                                                                 
- dropout_31 (Dropout)        (None, 64)                0         
-                                                                 
- dense_25 (Dense)            (None, 32)                2080      
-                                                                 
- title_output (Dense)        (None, 1)                 33        
-                                                                 
-=================================================================
-Total params: 8369 (32.69 KB)
-Trainable params: 8369 (32.69 KB)
-Non-trainable params: 0 (0.00 Byte)
-_________________________________________________________________</code></pre>
+<div id="cell-23" class="cell" data-outputid="fcb51f76-e7d8-494c-d8fe-b015e957b22e" data-execution_count="78">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming you have already defined the title_input</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>title_input <span class="op">=</span> tf.keras.Input(shape<span class="op">=</span>(<span class="dv">1</span>,), dtype<span class="op">=</span>tf.string, name<span class="op">=</span><span class="st">"title"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the model for title input</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> vectorize_layer(title_input)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> shared_embedding_layer(title_features)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.Dropout(<span class="fl">0.5</span>)(title_features)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.Conv1D(<span class="dv">128</span>, <span class="dv">5</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(title_features)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.MaxPooling1D(<span class="dv">5</span>)(title_features)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.GlobalAveragePooling1D()(title_features)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(title_features)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.Dropout(<span class="fl">0.3</span>)(title_features)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>title_features <span class="op">=</span> layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(title_features)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the output layer for title input</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>title_output <span class="op">=</span> layers.Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>, name<span class="op">=</span><span class="st">"title_output"</span>)(title_features)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the model</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>model1 <span class="op">=</span> tf.keras.Model(inputs<span class="op">=</span>title_input, outputs<span class="op">=</span>title_output)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>model1.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold">Model: "functional_21"</span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Layer (type)                         </span>┃<span style="font-weight: bold"> Output Shape                </span>┃<span style="font-weight: bold">         Param # </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ title (<span style="color: #0087ff; text-decoration-color: #0087ff">InputLayer</span>)                   │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">1</span>)                   │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ text_vectorization_1                 │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>)                 │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">TextVectorization</span>)                  │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ embedding (<span style="color: #0087ff; text-decoration-color: #0087ff">Embedding</span>)                │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>, <span style="color: #00af00; text-decoration-color: #00af00">10</span>)             │          <span style="color: #00af00; text-decoration-color: #00af00">20,000</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_15 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)                 │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>, <span style="color: #00af00; text-decoration-color: #00af00">10</span>)             │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d (<span style="color: #0087ff; text-decoration-color: #0087ff">Conv1D</span>)                      │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">496</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)            │           <span style="color: #00af00; text-decoration-color: #00af00">6,528</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling1d (<span style="color: #0087ff; text-decoration-color: #0087ff">MaxPooling1D</span>)         │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">99</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)             │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ global_average_pooling1d_4           │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)                 │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">GlobalAveragePooling1D</span>)             │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_18 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)                     │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)                  │           <span style="color: #00af00; text-decoration-color: #00af00">8,256</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_16 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)                 │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)                  │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_19 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)                     │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">32</span>)                  │           <span style="color: #00af00; text-decoration-color: #00af00">2,080</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ title_output (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)                 │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">1</span>)                   │              <span style="color: #00af00; text-decoration-color: #00af00">33</span> │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Total params: </span><span style="color: #00af00; text-decoration-color: #00af00">36,897</span> (144.13 KB)
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Trainable params: </span><span style="color: #00af00; text-decoration-color: #00af00">36,897</span> (144.13 KB)
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Non-trainable params: </span><span style="color: #00af00; text-decoration-color: #00af00">0</span> (0.00 B)
+</pre>
 </div>
 </div>
 <p>The summary function can be used to view the structure of model1, but, even better, we can use the utils function as shown below. The visualization provides an overview of the model’s architecture, including the connectivity between layers, the shapes of the tensors, and the names of each layer.</p>
-<div id="cell-25" class="cell" data-execution_count="99">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras <span class="im">import</span> utils</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-25" class="cell" data-execution_count="79">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras <span class="im">import</span> utils</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-26" class="cell" data-outputid="2ca63ae6-6174-42d6-d09b-4fe4fd22b844" data-execution_count="100">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the structure of the model</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>utils.plot_model(model1, <span class="st">"model1.png"</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                       show_shapes<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                       show_layer_names<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="100">
+<div id="cell-26" class="cell" data-outputid="850b4a67-4ebc-44f2-d281-fa9117edb60f" data-execution_count="80">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the structure of the model</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>utils.plot_model(model1, <span class="st">"model1.png"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                       show_shapes<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                       show_layer_names<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="80">
 <div>
 <figure class="figure">
 <p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
@@ -684,59 +711,55 @@ _________________________________________________________________</code></pre>
 </div>
 </div>
 <p>Finaly we can compile an fit our data to the model:</p>
-<div id="cell-28" class="cell" data-outputid="ca62c936-69d2-4555-d7dc-63487fbef1c0" data-execution_count="101">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and fit the model</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>model1.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>history1 <span class="op">=</span> model1.fit(train, epochs<span class="op">=</span><span class="dv">20</span>, validation_data<span class="op">=</span>val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-28" class="cell" data-outputid="32edf8a6-fcd1-462e-8a5f-a9a6de028b9f" data-execution_count="81">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and fit the model</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>model1.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>history1 <span class="op">=</span> model1.fit(train, epochs<span class="op">=</span><span class="dv">20</span>, validation_data<span class="op">=</span>val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/20
-180/180 [==============================] - 4s 14ms/step - loss: 0.5357 - accuracy: 0.8509 - val_loss: 0.2936 - val_accuracy: 0.9362
+180/180 ━━━━━━━━━━━━━━━━━━━━ 25s 123ms/step - accuracy: 0.5228 - loss: 0.6906 - val_accuracy: 0.7187 - val_loss: 0.5513
 Epoch 2/20
-180/180 [==============================] - 2s 12ms/step - loss: 0.2215 - accuracy: 0.9276 - val_loss: 0.1525 - val_accuracy: 0.9464
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 114ms/step - accuracy: 0.7714 - loss: 0.4684 - val_accuracy: 0.8996 - val_loss: 0.2606
 Epoch 3/20
-180/180 [==============================] - 2s 12ms/step - loss: 0.1695 - accuracy: 0.9357 - val_loss: 0.1384 - val_accuracy: 0.9469
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 117ms/step - accuracy: 0.9065 - loss: 0.2415 - val_accuracy: 0.9213 - val_loss: 0.2036
 Epoch 4/20
-180/180 [==============================] - 2s 12ms/step - loss: 0.1606 - accuracy: 0.9375 - val_loss: 0.1396 - val_accuracy: 0.9469
+180/180 ━━━━━━━━━━━━━━━━━━━━ 40s 110ms/step - accuracy: 0.9260 - loss: 0.1990 - val_accuracy: 0.9244 - val_loss: 0.1949
 Epoch 5/20
-180/180 [==============================] - 3s 17ms/step - loss: 0.1565 - accuracy: 0.9402 - val_loss: 0.1370 - val_accuracy: 0.9473
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 115ms/step - accuracy: 0.9326 - loss: 0.1805 - val_accuracy: 0.9229 - val_loss: 0.1925
 Epoch 6/20
-180/180 [==============================] - 2s 12ms/step - loss: 0.1522 - accuracy: 0.9407 - val_loss: 0.1337 - val_accuracy: 0.9491
+180/180 ━━━━━━━━━━━━━━━━━━━━ 20s 111ms/step - accuracy: 0.9416 - loss: 0.1609 - val_accuracy: 0.9247 - val_loss: 0.1885
 Epoch 7/20
-180/180 [==============================] - 3s 17ms/step - loss: 0.1503 - accuracy: 0.9419 - val_loss: 0.1335 - val_accuracy: 0.9493
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 111ms/step - accuracy: 0.9438 - loss: 0.1541 - val_accuracy: 0.9271 - val_loss: 0.1850
 Epoch 8/20
-180/180 [==============================] - 6s 30ms/step - loss: 0.1505 - accuracy: 0.9417 - val_loss: 0.1328 - val_accuracy: 0.9498
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 116ms/step - accuracy: 0.9455 - loss: 0.1516 - val_accuracy: 0.9296 - val_loss: 0.1830
 Epoch 9/20
-180/180 [==============================] - 5s 27ms/step - loss: 0.1497 - accuracy: 0.9418 - val_loss: 0.1310 - val_accuracy: 0.9513
+180/180 ━━━━━━━━━━━━━━━━━━━━ 40s 111ms/step - accuracy: 0.9480 - loss: 0.1425 - val_accuracy: 0.9313 - val_loss: 0.1792
 Epoch 10/20
-180/180 [==============================] - 4s 21ms/step - loss: 0.1441 - accuracy: 0.9448 - val_loss: 0.1321 - val_accuracy: 0.9507
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 116ms/step - accuracy: 0.9519 - loss: 0.1357 - val_accuracy: 0.9289 - val_loss: 0.1821
 Epoch 11/20
-180/180 [==============================] - 3s 16ms/step - loss: 0.1467 - accuracy: 0.9428 - val_loss: 0.1397 - val_accuracy: 0.9471
+180/180 ━━━━━━━━━━━━━━━━━━━━ 40s 109ms/step - accuracy: 0.9543 - loss: 0.1254 - val_accuracy: 0.9322 - val_loss: 0.1754
 Epoch 12/20
-180/180 [==============================] - 3s 17ms/step - loss: 0.1437 - accuracy: 0.9451 - val_loss: 0.1371 - val_accuracy: 0.9502
+180/180 ━━━━━━━━━━━━━━━━━━━━ 22s 118ms/step - accuracy: 0.9530 - loss: 0.1275 - val_accuracy: 0.9340 - val_loss: 0.1755
 Epoch 13/20
-180/180 [==============================] - 2s 12ms/step - loss: 0.1479 - accuracy: 0.9437 - val_loss: 0.1334 - val_accuracy: 0.9509
+180/180 ━━━━━━━━━━━━━━━━━━━━ 40s 110ms/step - accuracy: 0.9571 - loss: 0.1211 - val_accuracy: 0.9320 - val_loss: 0.1767
 Epoch 14/20
-180/180 [==============================] - 3s 17ms/step - loss: 0.1424 - accuracy: 0.9453 - val_loss: 0.1292 - val_accuracy: 0.9511
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 115ms/step - accuracy: 0.9573 - loss: 0.1191 - val_accuracy: 0.9331 - val_loss: 0.1750
 Epoch 15/20
-180/180 [==============================] - 2s 12ms/step - loss: 0.1387 - accuracy: 0.9458 - val_loss: 0.1284 - val_accuracy: 0.9524
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 114ms/step - accuracy: 0.9616 - loss: 0.1112 - val_accuracy: 0.9362 - val_loss: 0.1729
 Epoch 16/20
-180/180 [==============================] - 2s 12ms/step - loss: 0.1416 - accuracy: 0.9466 - val_loss: 0.1279 - val_accuracy: 0.9522
+180/180 ━━━━━━━━━━━━━━━━━━━━ 20s 109ms/step - accuracy: 0.9613 - loss: 0.1101 - val_accuracy: 0.9342 - val_loss: 0.1757
 Epoch 17/20
-180/180 [==============================] - 2s 12ms/step - loss: 0.1397 - accuracy: 0.9466 - val_loss: 0.1310 - val_accuracy: 0.9518
+180/180 ━━━━━━━━━━━━━━━━━━━━ 22s 115ms/step - accuracy: 0.9577 - loss: 0.1153 - val_accuracy: 0.9349 - val_loss: 0.1740
 Epoch 18/20
-180/180 [==============================] - 6s 32ms/step - loss: 0.1420 - accuracy: 0.9451 - val_loss: 0.1344 - val_accuracy: 0.9509
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 114ms/step - accuracy: 0.9602 - loss: 0.1106 - val_accuracy: 0.9376 - val_loss: 0.1740
 Epoch 19/20
-180/180 [==============================] - 4s 23ms/step - loss: 0.1401 - accuracy: 0.9463 - val_loss: 0.1279 - val_accuracy: 0.9527
+180/180 ━━━━━━━━━━━━━━━━━━━━ 41s 111ms/step - accuracy: 0.9625 - loss: 0.1020 - val_accuracy: 0.9371 - val_loss: 0.1734
 Epoch 20/20
-180/180 [==============================] - 4s 23ms/step - loss: 0.1371 - accuracy: 0.9480 - val_loss: 0.1295 - val_accuracy: 0.9524</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/usr/local/lib/python3.10/dist-packages/keras/src/engine/functional.py:642: UserWarning: Input dict contained keys ['text'] which did not match any model input. They will be ignored by the model.
-  inputs = self._flatten_to_reference_inputs(inputs)</code></pre>
+180/180 ━━━━━━━━━━━━━━━━━━━━ 21s 118ms/step - accuracy: 0.9625 - loss: 0.1033 - val_accuracy: 0.9344 - val_loss: 0.1776</code></pre>
 </div>
 </div>
-<p>In the visualization below, we can see the results of our training in a better format. As we can see, the model achieves a validation accuracy average around 95% using only the titles of the articles as input.</p>
-<div id="cell-30" class="cell" data-outputid="0a62edba-da33-4524-f46d-cef0e3631df3" data-execution_count="102">
+<p>In the visualization below, we can see the results of our training in a better format. As we can see, the model achieves a validation accuracy average around 93.5% using only the titles of the articles as input. Below, you can see that there is some overfitting of the model.</p>
+<div id="cell-30" class="cell" data-outputid="e7790a30-8335-4bf2-ec75-21521a1d5064" data-execution_count="82">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the results of the training using matplotlib</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plt.plot(history1.history[<span class="st">'accuracy'</span>], label<span class="op">=</span><span class="st">'Training Accuracy'</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>plt.plot(history1.history[<span class="st">'val_accuracy'</span>], label<span class="op">=</span><span class="st">'Validation Accuracy'</span>)</span>
@@ -757,7 +780,7 @@ Epoch 20/20
 <section id="model-2-article-text-only" class="level3">
 <h3 class="anchored" data-anchor-id="model-2-article-text-only">Model 2: Article Text Only</h3>
 <p>Using the same structure of layers for the second model but using the article text instead, we can further determine the answer to our question.</p>
-<div id="cell-32" class="cell" data-outputid="e84f7166-50bb-4f06-e7f9-871a3eab57f9" data-execution_count="103">
+<div id="cell-32" class="cell" data-outputid="6647f006-560d-46d7-d618-76c4f3f46a8c" data-execution_count="125">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the input layer for the article text</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>text_input <span class="op">=</span> tf.keras.Input(shape<span class="op">=</span>(<span class="dv">1</span>,), dtype<span class="op">=</span>tf.string, name<span class="op">=</span><span class="st">"text"</span>)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -765,54 +788,71 @@ Epoch 20/20
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> vectorize_layer(text_input)</span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> shared_embedding_layer(text_features)</span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.Dropout(<span class="fl">0.5</span>)(text_features)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.GlobalAveragePooling1D()(text_features)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(text_features)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.Dropout(<span class="fl">0.3</span>)(text_features)</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(text_features)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the text_output final layer</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>text_output <span class="op">=</span> layers.Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>, name<span class="op">=</span><span class="st">"text_output"</span>)(text_features)</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> tf.keras.Model(inputs<span class="op">=</span>text_input, outputs<span class="op">=</span>text_output)</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>model2.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Model: "model_20"
-_________________________________________________________________
- Layer (type)                Output Shape              Param #   
-=================================================================
- text (InputLayer)           [(None, 1)]               0         
-                                                                 
- text_vectorization_1 (Text  (None, 500)               0         
- Vectorization)                                                  
-                                                                 
- embedding (Embedding)       (None, 500, 3)            6000      
-                                                                 
- dropout_32 (Dropout)        (None, 500, 3)            0         
-                                                                 
- global_average_pooling1d_1  (None, 3)                 0         
- 4 (GlobalAveragePooling1D)                                      
-                                                                 
- dense_26 (Dense)            (None, 64)                256       
-                                                                 
- dropout_33 (Dropout)        (None, 64)                0         
-                                                                 
- dense_27 (Dense)            (None, 32)                2080      
-                                                                 
- text_output (Dense)         (None, 1)                 33        
-                                                                 
-=================================================================
-Total params: 8369 (32.69 KB)
-Trainable params: 8369 (32.69 KB)
-Non-trainable params: 0 (0.00 Byte)
-_________________________________________________________________</code></pre>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.Conv1D(<span class="dv">128</span>, <span class="dv">5</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(text_features)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.MaxPooling1D(<span class="dv">5</span>)(text_features)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.GlobalAveragePooling1D()(text_features)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(text_features)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.Dropout(<span class="fl">0.3</span>)(text_features)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>text_features <span class="op">=</span> layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(text_features)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the text_output final layer</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>text_output <span class="op">=</span> layers.Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>, name<span class="op">=</span><span class="st">"text_output"</span>)(text_features)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> tf.keras.Model(inputs<span class="op">=</span>text_input, outputs<span class="op">=</span>text_output)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>model2.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold">Model: "functional_41"</span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Layer (type)                         </span>┃<span style="font-weight: bold"> Output Shape                </span>┃<span style="font-weight: bold">         Param # </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ text (<span style="color: #0087ff; text-decoration-color: #0087ff">InputLayer</span>)                    │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">1</span>)                   │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ text_vectorization_1                 │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>)                 │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">TextVectorization</span>)                  │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ embedding (<span style="color: #0087ff; text-decoration-color: #0087ff">Embedding</span>)                │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>, <span style="color: #00af00; text-decoration-color: #00af00">10</span>)             │          <span style="color: #00af00; text-decoration-color: #00af00">20,000</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_36 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)                 │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>, <span style="color: #00af00; text-decoration-color: #00af00">10</span>)             │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_9 (<span style="color: #0087ff; text-decoration-color: #0087ff">Conv1D</span>)                    │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">496</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)            │           <span style="color: #00af00; text-decoration-color: #00af00">6,528</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling1d_8 (<span style="color: #0087ff; text-decoration-color: #0087ff">MaxPooling1D</span>)       │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">99</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)             │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ global_average_pooling1d_12          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)                 │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">GlobalAveragePooling1D</span>)             │                             │                 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_37 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)                     │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)                  │           <span style="color: #00af00; text-decoration-color: #00af00">8,256</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout_37 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)                 │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)                  │               <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_38 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)                     │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">32</span>)                  │           <span style="color: #00af00; text-decoration-color: #00af00">2,080</span> │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ text_output (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)                  │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">1</span>)                   │              <span style="color: #00af00; text-decoration-color: #00af00">33</span> │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Total params: </span><span style="color: #00af00; text-decoration-color: #00af00">36,897</span> (144.13 KB)
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Trainable params: </span><span style="color: #00af00; text-decoration-color: #00af00">36,897</span> (144.13 KB)
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Non-trainable params: </span><span style="color: #00af00; text-decoration-color: #00af00">0</span> (0.00 B)
+</pre>
 </div>
 </div>
-<div id="cell-33" class="cell" data-outputid="11435f4b-0ac4-4c31-e66c-6e770029e04c" data-execution_count="104">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the structure of the model</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>utils.plot_model(model2, <span class="st">"model2.png"</span>,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                       show_shapes<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                       show_layer_names<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="104">
+<div id="cell-33" class="cell" data-outputid="e6eb3d8c-616c-4a18-c019-a71c61785148" data-execution_count="126">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the structure of the model</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>utils.plot_model(model2, <span class="st">"model2.png"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                       show_shapes<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                       show_layer_names<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="126">
 <div>
 <figure class="figure">
 <p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
@@ -821,66 +861,62 @@ _________________________________________________________________</code></pre>
 </div>
 </div>
 <p>Now we compile and fit the model to the training data:</p>
-<div id="cell-35" class="cell" data-outputid="6b836f74-0e11-43b0-9140-c0bdc3e4ad45" data-execution_count="105">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and fit the model</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>model2.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>history2 <span class="op">=</span> model2.fit(train, epochs<span class="op">=</span><span class="dv">20</span>, validation_data<span class="op">=</span>val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-35" class="cell" data-outputid="233e762a-e6dc-4e85-a657-b06f7bbfa939" data-execution_count="127">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and fit the model</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>model2.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>history2 <span class="op">=</span> model2.fit(train, epochs<span class="op">=</span><span class="dv">20</span>, validation_data<span class="op">=</span>val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/20
-180/180 [==============================] - 5s 21ms/step - loss: 0.3855 - accuracy: 0.8710 - val_loss: 0.1533 - val_accuracy: 0.9569
+180/180 ━━━━━━━━━━━━━━━━━━━━ 73s 192ms/step - accuracy: 0.8695 - loss: 0.3665 - val_accuracy: 0.9636 - val_loss: 0.1192
 Epoch 2/20
-180/180 [==============================] - 4s 24ms/step - loss: 0.1393 - accuracy: 0.9528 - val_loss: 0.1336 - val_accuracy: 0.9593
+180/180 ━━━━━━━━━━━━━━━━━━━━ 37s 205ms/step - accuracy: 0.9802 - loss: 0.0599 - val_accuracy: 0.9724 - val_loss: 0.1042
 Epoch 3/20
-180/180 [==============================] - 4s 20ms/step - loss: 0.1274 - accuracy: 0.9598 - val_loss: 0.1295 - val_accuracy: 0.9580
+180/180 ━━━━━━━━━━━━━━━━━━━━ 32s 180ms/step - accuracy: 0.9892 - loss: 0.0372 - val_accuracy: 0.9711 - val_loss: 0.0961
 Epoch 4/20
-180/180 [==============================] - 3s 18ms/step - loss: 0.1197 - accuracy: 0.9612 - val_loss: 0.1262 - val_accuracy: 0.9582
+180/180 ━━━━━━━━━━━━━━━━━━━━ 31s 172ms/step - accuracy: 0.9901 - loss: 0.0293 - val_accuracy: 0.9711 - val_loss: 0.1045
 Epoch 5/20
-180/180 [==============================] - 5s 25ms/step - loss: 0.1167 - accuracy: 0.9633 - val_loss: 0.1241 - val_accuracy: 0.9591
+180/180 ━━━━━━━━━━━━━━━━━━━━ 34s 135ms/step - accuracy: 0.9924 - loss: 0.0253 - val_accuracy: 0.9727 - val_loss: 0.1057
 Epoch 6/20
-180/180 [==============================] - 3s 19ms/step - loss: 0.1102 - accuracy: 0.9658 - val_loss: 0.1197 - val_accuracy: 0.9609
+180/180 ━━━━━━━━━━━━━━━━━━━━ 25s 138ms/step - accuracy: 0.9914 - loss: 0.0253 - val_accuracy: 0.9707 - val_loss: 0.1118
 Epoch 7/20
-180/180 [==============================] - 4s 20ms/step - loss: 0.1066 - accuracy: 0.9668 - val_loss: 0.1201 - val_accuracy: 0.9600
+180/180 ━━━━━━━━━━━━━━━━━━━━ 40s 135ms/step - accuracy: 0.9927 - loss: 0.0234 - val_accuracy: 0.9738 - val_loss: 0.1129
 Epoch 8/20
-180/180 [==============================] - 5s 25ms/step - loss: 0.1061 - accuracy: 0.9674 - val_loss: 0.1147 - val_accuracy: 0.9640
+180/180 ━━━━━━━━━━━━━━━━━━━━ 24s 133ms/step - accuracy: 0.9933 - loss: 0.0203 - val_accuracy: 0.9724 - val_loss: 0.1163
 Epoch 9/20
-180/180 [==============================] - 4s 20ms/step - loss: 0.1043 - accuracy: 0.9685 - val_loss: 0.1127 - val_accuracy: 0.9642
+180/180 ━━━━━━━━━━━━━━━━━━━━ 25s 138ms/step - accuracy: 0.9934 - loss: 0.0233 - val_accuracy: 0.9740 - val_loss: 0.1184
 Epoch 10/20
-180/180 [==============================] - 5s 25ms/step - loss: 0.1003 - accuracy: 0.9693 - val_loss: 0.1097 - val_accuracy: 0.9669
+180/180 ━━━━━━━━━━━━━━━━━━━━ 24s 134ms/step - accuracy: 0.9931 - loss: 0.0228 - val_accuracy: 0.9731 - val_loss: 0.1091
 Epoch 11/20
-180/180 [==============================] - 5s 25ms/step - loss: 0.0990 - accuracy: 0.9704 - val_loss: 0.1084 - val_accuracy: 0.9664
+180/180 ━━━━━━━━━━━━━━━━━━━━ 41s 132ms/step - accuracy: 0.9933 - loss: 0.0208 - val_accuracy: 0.9742 - val_loss: 0.1131
 Epoch 12/20
-180/180 [==============================] - 3s 19ms/step - loss: 0.0971 - accuracy: 0.9688 - val_loss: 0.1079 - val_accuracy: 0.9653
+180/180 ━━━━━━━━━━━━━━━━━━━━ 42s 137ms/step - accuracy: 0.9925 - loss: 0.0226 - val_accuracy: 0.9731 - val_loss: 0.1216
 Epoch 13/20
-180/180 [==============================] - 6s 31ms/step - loss: 0.0949 - accuracy: 0.9702 - val_loss: 0.1036 - val_accuracy: 0.9698
+180/180 ━━━━━━━━━━━━━━━━━━━━ 26s 143ms/step - accuracy: 0.9933 - loss: 0.0226 - val_accuracy: 0.9733 - val_loss: 0.1089
 Epoch 14/20
-180/180 [==============================] - 5s 28ms/step - loss: 0.0928 - accuracy: 0.9709 - val_loss: 0.1035 - val_accuracy: 0.9669
+180/180 ━━━━━━━━━━━━━━━━━━━━ 25s 136ms/step - accuracy: 0.9921 - loss: 0.0242 - val_accuracy: 0.9722 - val_loss: 0.1263
 Epoch 15/20
-180/180 [==============================] - 4s 22ms/step - loss: 0.0910 - accuracy: 0.9710 - val_loss: 0.1001 - val_accuracy: 0.9702
+180/180 ━━━━━━━━━━━━━━━━━━━━ 41s 137ms/step - accuracy: 0.9911 - loss: 0.0249 - val_accuracy: 0.9704 - val_loss: 0.1212
 Epoch 16/20
-180/180 [==============================] - 8s 41ms/step - loss: 0.0897 - accuracy: 0.9717 - val_loss: 0.0978 - val_accuracy: 0.9700
+180/180 ━━━━━━━━━━━━━━━━━━━━ 44s 153ms/step - accuracy: 0.9943 - loss: 0.0202 - val_accuracy: 0.9716 - val_loss: 0.1027
 Epoch 17/20
-180/180 [==============================] - 5s 25ms/step - loss: 0.0868 - accuracy: 0.9725 - val_loss: 0.0972 - val_accuracy: 0.9696
+180/180 ━━━━━━━━━━━━━━━━━━━━ 38s 136ms/step - accuracy: 0.9947 - loss: 0.0194 - val_accuracy: 0.9722 - val_loss: 0.1183
 Epoch 18/20
-180/180 [==============================] - 4s 20ms/step - loss: 0.0852 - accuracy: 0.9731 - val_loss: 0.0950 - val_accuracy: 0.9707
+180/180 ━━━━━━━━━━━━━━━━━━━━ 42s 139ms/step - accuracy: 0.9935 - loss: 0.0217 - val_accuracy: 0.9722 - val_loss: 0.1279
 Epoch 19/20
-180/180 [==============================] - 3s 18ms/step - loss: 0.0826 - accuracy: 0.9725 - val_loss: 0.0935 - val_accuracy: 0.9713
+180/180 ━━━━━━━━━━━━━━━━━━━━ 42s 147ms/step - accuracy: 0.9929 - loss: 0.0210 - val_accuracy: 0.9740 - val_loss: 0.1233
 Epoch 20/20
-180/180 [==============================] - 4s 24ms/step - loss: 0.0840 - accuracy: 0.9730 - val_loss: 0.0919 - val_accuracy: 0.9702</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/usr/local/lib/python3.10/dist-packages/keras/src/engine/functional.py:642: UserWarning: Input dict contained keys ['title'] which did not match any model input. They will be ignored by the model.
-  inputs = self._flatten_to_reference_inputs(inputs)</code></pre>
+180/180 ━━━━━━━━━━━━━━━━━━━━ 40s 143ms/step - accuracy: 0.9940 - loss: 0.0184 - val_accuracy: 0.9704 - val_loss: 0.1188</code></pre>
 </div>
 </div>
-<p>As we can see bellow, this model achieves a better validation accuracy average than the first model. This is probably because there is more information given by the article txt than from the title, so more relationships between words can be determined. Additionally, there is some overfitting but not much more than what is expected.</p>
-<div id="cell-37" class="cell" data-outputid="6584f2a9-be7a-492e-f7b0-b9b340da27ee" data-execution_count="106">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history2.history[<span class="st">'accuracy'</span>], label<span class="op">=</span><span class="st">'Training Accuracy'</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>plt.plot(history2.history[<span class="st">'val_accuracy'</span>], label<span class="op">=</span><span class="st">'Validation Accuracy'</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epochs'</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Model 2: Texts'</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As we can see bellow, this model achieves a better validation accuracy average than model1, at around 97.3%. This is probably because there is more information given by the article text than from the title, so more relationships between words can be determined. Additionally, there is once again some overfitting since adding another dropout layers increased the overfitting.</p>
+<div id="cell-37" class="cell" data-outputid="ed9f6fd3-5910-4b37-ebd4-d7503d296520" data-execution_count="128">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history2.history[<span class="st">'accuracy'</span>], label<span class="op">=</span><span class="st">'Training Accuracy'</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>plt.plot(history2.history[<span class="st">'val_accuracy'</span>], label<span class="op">=</span><span class="st">'Validation Accuracy'</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epochs'</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Model 2: Texts'</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -893,87 +929,104 @@ Epoch 20/20
 <section id="model-3-article-title-and-text" class="level3">
 <h3 class="anchored" data-anchor-id="model-3-article-title-and-text">Model 3: Article Title and Text</h3>
 <p>Finally, we will use both the title and text in this model. Since we are using Functional API, we can use the layers we created for each input in the previous models and combine them for this model using a concatinate layer as shown below:</p>
-<div id="cell-39" class="cell" data-execution_count="107">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> layers.concatenate([title_features, text_features], axis <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-39" class="cell" data-execution_count="129">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> layers.concatenate([title_features, text_features], axis <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In order to prevent overfitting and to stabalize the model I have added some more Dense and Dropout layers:</p>
-<div id="cell-41" class="cell" data-execution_count="108">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(main)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(main)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> layers.Dropout(<span class="fl">0.3</span>)(main)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> layers.Dense(<span class="dv">1</span>, name <span class="op">=</span> <span class="st">"genre"</span>)(main)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-41" class="cell" data-execution_count="130">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(main)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>main <span class="op">=</span> layers.Dropout(<span class="fl">0.5</span>)(main)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> layers.Dense(<span class="dv">1</span>, name <span class="op">=</span> <span class="st">"fake"</span>)(main)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, we define the model with both the title input and text input:</p>
-<div id="cell-43" class="cell" data-outputid="771debc5-ea6f-46be-c601-4796680faa11" data-execution_count="109">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="op">=</span> keras.Model(</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    inputs <span class="op">=</span> [title_input, text_input],</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> output</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>model3.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Model: "model_21"
-__________________________________________________________________________________________________
- Layer (type)                Output Shape                 Param #   Connected to                  
-==================================================================================================
- title (InputLayer)          [(None, 1)]                  0         []                            
-                                                                                                  
- text (InputLayer)           [(None, 1)]                  0         []                            
-                                                                                                  
- text_vectorization_1 (Text  (None, 500)                  0         ['title[0][0]',               
- Vectorization)                                                      'text[0][0]']                
-                                                                                                  
- embedding (Embedding)       (None, 500, 3)               6000      ['text_vectorization_1[6][0]',
-                                                                     'text_vectorization_1[7][0]']
-                                                                                                  
- dropout_30 (Dropout)        (None, 500, 3)               0         ['embedding[4][0]']           
-                                                                                                  
- dropout_32 (Dropout)        (None, 500, 3)               0         ['embedding[5][0]']           
-                                                                                                  
- global_average_pooling1d_1  (None, 3)                    0         ['dropout_30[0][0]']          
- 3 (GlobalAveragePooling1D)                                                                       
-                                                                                                  
- global_average_pooling1d_1  (None, 3)                    0         ['dropout_32[0][0]']          
- 4 (GlobalAveragePooling1D)                                                                       
-                                                                                                  
- dense_24 (Dense)            (None, 64)                   256       ['global_average_pooling1d_13[
-                                                                    0][0]']                       
-                                                                                                  
- dense_26 (Dense)            (None, 64)                   256       ['global_average_pooling1d_14[
-                                                                    0][0]']                       
-                                                                                                  
- dropout_31 (Dropout)        (None, 64)                   0         ['dense_24[0][0]']            
-                                                                                                  
- dropout_33 (Dropout)        (None, 64)                   0         ['dense_26[0][0]']            
-                                                                                                  
- dense_25 (Dense)            (None, 32)                   2080      ['dropout_31[0][0]']          
-                                                                                                  
- dense_27 (Dense)            (None, 32)                   2080      ['dropout_33[0][0]']          
-                                                                                                  
- concatenate_7 (Concatenate  (None, 64)                   0         ['dense_25[0][0]',            
- )                                                                   'dense_27[0][0]']            
-                                                                                                  
- dense_28 (Dense)            (None, 32)                   2080      ['concatenate_7[0][0]']       
-                                                                                                  
- dense_29 (Dense)            (None, 32)                   1056      ['dense_28[0][0]']            
-                                                                                                  
- dropout_34 (Dropout)        (None, 32)                   0         ['dense_29[0][0]']            
-                                                                                                  
- genre (Dense)               (None, 1)                    33        ['dropout_34[0][0]']          
-                                                                                                  
-==================================================================================================
-Total params: 13841 (54.07 KB)
-Trainable params: 13841 (54.07 KB)
-Non-trainable params: 0 (0.00 Byte)
-__________________________________________________________________________________________________</code></pre>
+<div id="cell-43" class="cell" data-outputid="1cbfd042-687b-4211-fd88-7fb60e0eabf8" data-execution_count="131">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="op">=</span> keras.Model(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    inputs <span class="op">=</span> [title_input, text_input],</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> output</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>model3.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold">Model: "functional_43"</span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Layer (type)              </span>┃<span style="font-weight: bold"> Output Shape           </span>┃<span style="font-weight: bold">        Param # </span>┃<span style="font-weight: bold"> Connected to           </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ title (<span style="color: #0087ff; text-decoration-color: #0087ff">InputLayer</span>)        │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">1</span>)              │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ -                      │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ text (<span style="color: #0087ff; text-decoration-color: #0087ff">InputLayer</span>)         │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">1</span>)              │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ -                      │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ text_vectorization_1      │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>)            │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ title[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>],           │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">TextVectorization</span>)       │                        │                │ text[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]             │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ embedding (<span style="color: #0087ff; text-decoration-color: #0087ff">Embedding</span>)     │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>, <span style="color: #00af00; text-decoration-color: #00af00">10</span>)        │         <span style="color: #00af00; text-decoration-color: #00af00">20,000</span> │ text_vectorization_1[<span style="color: #00af00; text-decoration-color: #00af00">…</span> │
+│                           │                        │                │ text_vectorization_1[<span style="color: #00af00; text-decoration-color: #00af00">…</span> │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dropout_15 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)      │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>, <span style="color: #00af00; text-decoration-color: #00af00">10</span>)        │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ embedding[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]        │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dropout_36 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)      │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">500</span>, <span style="color: #00af00; text-decoration-color: #00af00">10</span>)        │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ embedding[<span style="color: #00af00; text-decoration-color: #00af00">9</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]        │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ conv1d (<span style="color: #0087ff; text-decoration-color: #0087ff">Conv1D</span>)           │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">496</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)       │          <span style="color: #00af00; text-decoration-color: #00af00">6,528</span> │ dropout_15[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]       │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ conv1d_9 (<span style="color: #0087ff; text-decoration-color: #0087ff">Conv1D</span>)         │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">496</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)       │          <span style="color: #00af00; text-decoration-color: #00af00">6,528</span> │ dropout_36[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]       │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ max_pooling1d             │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">99</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)        │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ conv1d[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]           │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">MaxPooling1D</span>)            │                        │                │                        │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ max_pooling1d_8           │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">99</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)        │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ conv1d_9[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]         │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">MaxPooling1D</span>)            │                        │                │                        │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ global_average_pooling1d… │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)            │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ max_pooling1d[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]    │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">GlobalAveragePooling1D</span>)  │                        │                │                        │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ global_average_pooling1d… │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)            │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ max_pooling1d_8[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]  │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">GlobalAveragePooling1D</span>)  │                        │                │                        │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dense_18 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)             │          <span style="color: #00af00; text-decoration-color: #00af00">8,256</span> │ global_average_poolin… │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dense_37 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)             │          <span style="color: #00af00; text-decoration-color: #00af00">8,256</span> │ global_average_poolin… │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dropout_16 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)      │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)             │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ dense_18[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]         │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dropout_37 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)      │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)             │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ dense_37[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]         │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dense_19 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">32</span>)             │          <span style="color: #00af00; text-decoration-color: #00af00">2,080</span> │ dropout_16[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]       │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dense_38 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">32</span>)             │          <span style="color: #00af00; text-decoration-color: #00af00">2,080</span> │ dropout_37[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]       │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ concatenate_8             │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)             │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ dense_19[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>],        │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">Concatenate</span>)             │                        │                │ dense_38[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]         │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dense_39 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">32</span>)             │          <span style="color: #00af00; text-decoration-color: #00af00">2,080</span> │ concatenate_8[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]    │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ dropout_38 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)      │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">32</span>)             │              <span style="color: #00af00; text-decoration-color: #00af00">0</span> │ dense_39[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]         │
+├───────────────────────────┼────────────────────────┼────────────────┼────────────────────────┤
+│ fake (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)              │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">1</span>)              │             <span style="color: #00af00; text-decoration-color: #00af00">33</span> │ dropout_38[<span style="color: #00af00; text-decoration-color: #00af00">0</span>][<span style="color: #00af00; text-decoration-color: #00af00">0</span>]       │
+└───────────────────────────┴────────────────────────┴────────────────┴────────────────────────┘
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Total params: </span><span style="color: #00af00; text-decoration-color: #00af00">55,841</span> (218.13 KB)
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Trainable params: </span><span style="color: #00af00; text-decoration-color: #00af00">55,841</span> (218.13 KB)
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Non-trainable params: </span><span style="color: #00af00; text-decoration-color: #00af00">0</span> (0.00 B)
+</pre>
 </div>
 </div>
 <p>Through this visualization of the model architecture, we can see how Functional API implements the layers of the different imputs and finally combines everything using the concatinatelayer. This visualization really highlights the advantiges of using Functional API to create an complex neural network.</p>
-<div id="cell-45" class="cell" data-outputid="62f9d527-eb43-4e9f-c92e-13377596a447" data-execution_count="110">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>utils.plot_model(model3, <span class="st">"model3.png"</span>,</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                       show_shapes<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                       show_layer_names<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="110">
+<div id="cell-45" class="cell" data-outputid="3aa19b21-eea2-4188-8ba9-af6bf3d945cb" data-execution_count="132">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>utils.plot_model(model3, <span class="st">"model3.png"</span>,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                 show_shapes<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                 show_layer_names<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                 rankdir<span class="op">=</span><span class="st">'LR'</span>) <span class="co"># output it left to right because does not output otherwise because of complexity</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="132">
 <div>
 <figure class="figure">
 <p><img src="index_files/figure-html/cell-26-output-1.png" class="img-fluid figure-img"></p>
@@ -982,61 +1035,61 @@ ________________________________________________________________________________
 </div>
 </div>
 <p>Next, we can compile and fit the model to the training data:</p>
-<div id="cell-47" class="cell" data-outputid="a79f01eb-350b-44c2-94cd-2608b37a9a0f" data-execution_count="111">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>model3.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>history3 <span class="op">=</span> model3.fit(train, epochs<span class="op">=</span><span class="dv">20</span>, validation_data<span class="op">=</span>val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-47" class="cell" data-outputid="8e7dc354-0f1d-43d8-ea56-b69c551035ee" data-execution_count="133">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model3.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>history3 <span class="op">=</span> model3.fit(train, epochs<span class="op">=</span><span class="dv">20</span>, validation_data<span class="op">=</span>val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/20
-180/180 [==============================] - 7s 27ms/step - loss: 0.2234 - accuracy: 0.9525 - val_loss: 0.1513 - val_accuracy: 0.9711
+180/180 ━━━━━━━━━━━━━━━━━━━━ 49s 250ms/step - accuracy: 0.9180 - loss: 0.8561 - val_accuracy: 0.9660 - val_loss: 0.4228
 Epoch 2/20
-180/180 [==============================] - 7s 39ms/step - loss: 0.1134 - accuracy: 0.9801 - val_loss: 0.1010 - val_accuracy: 0.9813
+180/180 ━━━━━━━━━━━━━━━━━━━━ 81s 244ms/step - accuracy: 0.9904 - loss: 0.0998 - val_accuracy: 0.9684 - val_loss: 0.4066
 Epoch 3/20
-180/180 [==============================] - 6s 33ms/step - loss: 0.0888 - accuracy: 0.9809 - val_loss: 0.1286 - val_accuracy: 0.9811
+180/180 ━━━━━━━━━━━━━━━━━━━━ 83s 250ms/step - accuracy: 0.9848 - loss: 0.1587 - val_accuracy: 0.9724 - val_loss: 0.3130
 Epoch 4/20
-180/180 [==============================] - 5s 26ms/step - loss: 0.1332 - accuracy: 0.9699 - val_loss: 0.1016 - val_accuracy: 0.9807
+180/180 ━━━━━━━━━━━━━━━━━━━━ 81s 243ms/step - accuracy: 0.9897 - loss: 0.0756 - val_accuracy: 0.9673 - val_loss: 0.4252
 Epoch 5/20
-180/180 [==============================] - 5s 26ms/step - loss: 0.0871 - accuracy: 0.9829 - val_loss: 0.1087 - val_accuracy: 0.9816
+180/180 ━━━━━━━━━━━━━━━━━━━━ 80s 233ms/step - accuracy: 0.9862 - loss: 0.1294 - val_accuracy: 0.9749 - val_loss: 0.2787
 Epoch 6/20
-180/180 [==============================] - 6s 32ms/step - loss: 0.1119 - accuracy: 0.9792 - val_loss: 0.1112 - val_accuracy: 0.9809
+180/180 ━━━━━━━━━━━━━━━━━━━━ 42s 233ms/step - accuracy: 0.9941 - loss: 0.0418 - val_accuracy: 0.9736 - val_loss: 0.3162
 Epoch 7/20
-180/180 [==============================] - 6s 32ms/step - loss: 0.0789 - accuracy: 0.9840 - val_loss: 0.0750 - val_accuracy: 0.9820
+180/180 ━━━━━━━━━━━━━━━━━━━━ 87s 262ms/step - accuracy: 0.9907 - loss: 0.0670 - val_accuracy: 0.9704 - val_loss: 0.2943
 Epoch 8/20
-180/180 [==============================] - 5s 26ms/step - loss: 0.0767 - accuracy: 0.9846 - val_loss: 0.0985 - val_accuracy: 0.9820
+180/180 ━━━━━━━━━━━━━━━━━━━━ 78s 240ms/step - accuracy: 0.9934 - loss: 0.0567 - val_accuracy: 0.9733 - val_loss: 0.2928
 Epoch 9/20
-180/180 [==============================] - 8s 44ms/step - loss: 0.0792 - accuracy: 0.9857 - val_loss: 0.1151 - val_accuracy: 0.9789
+180/180 ━━━━━━━━━━━━━━━━━━━━ 82s 240ms/step - accuracy: 0.9949 - loss: 0.0374 - val_accuracy: 0.9667 - val_loss: 0.3318
 Epoch 10/20
-180/180 [==============================] - 5s 26ms/step - loss: 0.0667 - accuracy: 0.9850 - val_loss: 0.1028 - val_accuracy: 0.9818
+180/180 ━━━━━━━━━━━━━━━━━━━━ 82s 240ms/step - accuracy: 0.9922 - loss: 0.0568 - val_accuracy: 0.9716 - val_loss: 0.3410
 Epoch 11/20
-180/180 [==============================] - 6s 33ms/step - loss: 0.0825 - accuracy: 0.9828 - val_loss: 0.0987 - val_accuracy: 0.9824
+180/180 ━━━━━━━━━━━━━━━━━━━━ 43s 238ms/step - accuracy: 0.9946 - loss: 0.0410 - val_accuracy: 0.9756 - val_loss: 0.2609
 Epoch 12/20
-180/180 [==============================] - 5s 30ms/step - loss: 0.1185 - accuracy: 0.9678 - val_loss: 0.1219 - val_accuracy: 0.9780
+180/180 ━━━━━━━━━━━━━━━━━━━━ 82s 236ms/step - accuracy: 0.9728 - loss: 0.1577 - val_accuracy: 0.9724 - val_loss: 0.2557
 Epoch 13/20
-180/180 [==============================] - 6s 35ms/step - loss: 0.0811 - accuracy: 0.9826 - val_loss: 0.1243 - val_accuracy: 0.9811
+180/180 ━━━━━━━━━━━━━━━━━━━━ 84s 244ms/step - accuracy: 0.9817 - loss: 0.1109 - val_accuracy: 0.9744 - val_loss: 0.1485
 Epoch 14/20
-180/180 [==============================] - 5s 26ms/step - loss: 0.0759 - accuracy: 0.9832 - val_loss: 0.0861 - val_accuracy: 0.9811
+180/180 ━━━━━━━━━━━━━━━━━━━━ 83s 252ms/step - accuracy: 0.9838 - loss: 0.0637 - val_accuracy: 0.9727 - val_loss: 0.2564
 Epoch 15/20
-180/180 [==============================] - 6s 35ms/step - loss: 0.1334 - accuracy: 0.9572 - val_loss: 0.1055 - val_accuracy: 0.9796
+180/180 ━━━━━━━━━━━━━━━━━━━━ 82s 255ms/step - accuracy: 0.9893 - loss: 0.0625 - val_accuracy: 0.9731 - val_loss: 0.2256
 Epoch 16/20
-180/180 [==============================] - 5s 26ms/step - loss: 0.0757 - accuracy: 0.9836 - val_loss: 0.1145 - val_accuracy: 0.9804
+180/180 ━━━━━━━━━━━━━━━━━━━━ 80s 243ms/step - accuracy: 0.9925 - loss: 0.0436 - val_accuracy: 0.9749 - val_loss: 0.2388
 Epoch 17/20
-180/180 [==============================] - 6s 32ms/step - loss: 0.0948 - accuracy: 0.9802 - val_loss: 0.1085 - val_accuracy: 0.9820
+180/180 ━━━━━━━━━━━━━━━━━━━━ 83s 246ms/step - accuracy: 0.9903 - loss: 0.0434 - val_accuracy: 0.9738 - val_loss: 0.2468
 Epoch 18/20
-180/180 [==============================] - 5s 26ms/step - loss: 0.0715 - accuracy: 0.9841 - val_loss: 0.0987 - val_accuracy: 0.9800
+180/180 ━━━━━━━━━━━━━━━━━━━━ 45s 250ms/step - accuracy: 0.9932 - loss: 0.0275 - val_accuracy: 0.9760 - val_loss: 0.2479
 Epoch 19/20
-180/180 [==============================] - 6s 31ms/step - loss: 0.0646 - accuracy: 0.9858 - val_loss: 0.1047 - val_accuracy: 0.9791
+180/180 ━━━━━━━━━━━━━━━━━━━━ 44s 243ms/step - accuracy: 0.9931 - loss: 0.0347 - val_accuracy: 0.9751 - val_loss: 0.2711
 Epoch 20/20
-180/180 [==============================] - 5s 26ms/step - loss: 0.0826 - accuracy: 0.9842 - val_loss: 0.1163 - val_accuracy: 0.9818</code></pre>
+180/180 ━━━━━━━━━━━━━━━━━━━━ 46s 257ms/step - accuracy: 0.9940 - loss: 0.0421 - val_accuracy: 0.9747 - val_loss: 0.2884</code></pre>
 </div>
 </div>
-<p>As we can see through the visualization, this model achieves the highest average validation accuracy of 98%. This is better than both of the validation accuracies of model1 and model2. Hoever, we can see that the training accuracy fluctuates a lot and oscilates between overfitting and underfitting.</p>
-<div id="cell-49" class="cell" data-outputid="dfe84950-40f2-4a2f-df9f-856625d6f66a" data-execution_count="112">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history3.history[<span class="st">'accuracy'</span>], label<span class="op">=</span><span class="st">'Training Accuracy'</span>)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>plt.plot(history3.history[<span class="st">'val_accuracy'</span>], label<span class="op">=</span><span class="st">'Validation Accuracy'</span>)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epochs'</span>)</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Model 1: Titles'</span>)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As we can see through the visualization, this model has an average validation accuracy of around 97.4%. This is better than both of the validation accuracies of model1 and model2, but it seems less stable than model2 as it fluctuates more between epochs.</p>
+<div id="cell-49" class="cell" data-outputid="69b350f4-1553-4c59-8e96-57a68da445d3" data-execution_count="134">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history3.history[<span class="st">'accuracy'</span>], label<span class="op">=</span><span class="st">'Training Accuracy'</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>plt.plot(history3.history[<span class="st">'val_accuracy'</span>], label<span class="op">=</span><span class="st">'Validation Accuracy'</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epochs'</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Model 1: Titles'</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1048,17 +1101,17 @@ Epoch 20/20
 </section>
 <section id="testing-on-the-best-model" class="level3">
 <h3 class="anchored" data-anchor-id="testing-on-the-best-model">Testing on the Best Model:</h3>
-<p>As we concluded above, model3 has teh best average validation accuracy so we will use it to evaluate the test data.</p>
+<p>As we concluded above, model3 has the best average validation accuracy at the end, but model 2 is more stable. For now, we will only use model3 to evaluate the test data.</p>
 <p>First, we need to dowload the test data and put it into the proper format using the make_dataset function we defined previously.</p>
-<div id="cell-51" class="cell" data-outputid="d038cfe7-5309-4865-ea27-aaf75c44d069" data-execution_count="94">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>test_url <span class="op">=</span> <span class="st">"https://github.com/PhilChodrow/PIC16b/blob/master/datasets/fake_news_test.csv?raw=true"</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the CSV file into a DataFrame</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>df_test <span class="op">=</span> pd.read_csv(test_url)</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>df_test.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="94">
+<div id="cell-51" class="cell" data-outputid="a455ed31-ad2b-4096-c145-769e5cc437a2" data-execution_count="135">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>test_url <span class="op">=</span> <span class="st">"https://github.com/PhilChodrow/PIC16b/blob/master/datasets/fake_news_test.csv?raw=true"</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the CSV file into a DataFrame</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>df_test <span class="op">=</span> pd.read_csv(test_url)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>df_test.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="135">
 
-  <div id="df-e0d6b218-4653-4a1b-8a3a-b3c9996f9ad0" class="colab-df-container">
+  <div id="df-2ee1cd8e-bf5b-48f4-b680-89cee6a0e063" class="colab-df-container">
     <div>
 
 
@@ -1115,7 +1168,7 @@ Epoch 20/20
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-e0d6b218-4653-4a1b-8a3a-b3c9996f9ad0')" title="Convert this dataframe to an interactive table." style="display:none;">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-2ee1cd8e-bf5b-48f4-b680-89cee6a0e063')" title="Convert this dataframe to an interactive table." style="display:none;">
 
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
@@ -1165,12 +1218,12 @@ Epoch 20/20
 
     <script>
       const buttonEl =
-        document.querySelector('#df-e0d6b218-4653-4a1b-8a3a-b3c9996f9ad0 button.colab-df-convert');
+        document.querySelector('#df-2ee1cd8e-bf5b-48f4-b680-89cee6a0e063 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-e0d6b218-4653-4a1b-8a3a-b3c9996f9ad0');
+        const element = document.querySelector('#df-2ee1cd8e-bf5b-48f4-b680-89cee6a0e063');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -1190,8 +1243,8 @@ Epoch 20/20
   </div>
 
 
-<div id="df-dd998f5d-ffc4-406a-ac58-0f15a9cddd79">
-  <button class="colab-df-quickchart" onclick="quickchart('df-dd998f5d-ffc4-406a-ac58-0f15a9cddd79')" title="Suggest charts" style="display:none;">
+<div id="df-81268637-b5c2-4ee2-bdd5-49bd040ee5be">
+  <button class="colab-df-quickchart" onclick="quickchart('df-81268637-b5c2-4ee2-bdd5-49bd040ee5be')" title="Suggest charts" style="display:none;">
 
 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
     <g>
@@ -1307,7 +1360,7 @@ Epoch 20/20
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-dd998f5d-ffc4-406a-ac58-0f15a9cddd79 button');
+        document.querySelector('#df-81268637-b5c2-4ee2-bdd5-49bd040ee5be button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -1317,16 +1370,16 @@ Epoch 20/20
   </div>
 </div>
 </div>
-<div id="cell-52" class="cell" data-execution_count="113">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>test_ds <span class="op">=</span> make_dataset(df_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-52" class="cell" data-execution_count="136">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>test_ds <span class="op">=</span> make_dataset(df_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Next we can evaluate the test data using the model. As can be seen below, it achieves an accuracy of 98.22% similar to the average of the validation accuracy.</p>
-<div id="cell-54" class="cell" data-outputid="aab28ea2-7760-41a0-e0f2-5afca08e9544" data-execution_count="114">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>test_loss, test_accuracy <span class="op">=</span> model3.evaluate(test_ds)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Test Accuracy: </span><span class="sc">{</span>test_accuracy <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next we can evaluate the test data using the model. As can be seen below, it achieves an accuracy of 97.37% similar to the average of the validation accuracy.</p>
+<div id="cell-54" class="cell" data-outputid="4839174c-cdcc-43cf-b042-bd38bb4bec2a" data-execution_count="137">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>test_loss, test_accuracy <span class="op">=</span> model3.evaluate(test_ds)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Test Accuracy: </span><span class="sc">{</span>test_accuracy <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>225/225 [==============================] - 3s 15ms/step - loss: 0.1150 - accuracy: 0.9822
-Test Accuracy: 98.22%</code></pre>
+<pre><code>225/225 ━━━━━━━━━━━━━━━━━━━━ 14s 62ms/step - accuracy: 0.9737 - loss: 0.3040
+Test Accuracy: 97.46%</code></pre>
 </div>
 </div>
 </section>
@@ -1334,50 +1387,50 @@ Test Accuracy: 98.22%</code></pre>
 <h3 class="anchored" data-anchor-id="visualize-embedding">Visualize Embedding:</h3>
 <p>Finally, we want to visualize the embedding done by our shared embedding layer in our model3. This will give us insight into the relationship our model determines between words in the vocabulary.</p>
 <p>In order to visualize this we can use sklearn’s PCA, Principal Component Analysis. PCA transform a dataset with correlated features into a new set of uncorrelated features, known as principal components. These principal components are linear combinations of the original features and are ordered by the amount of variance they explain in the data.</p>
-<div id="cell-56" class="cell" data-execution_count="130">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> model3.get_layer(<span class="st">'embedding'</span>).get_weights()[<span class="dv">0</span>] <span class="co"># get the weights from the embedding layer</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>vocab <span class="op">=</span> vectorize_layer.get_vocabulary()                <span class="co"># get the vocabulary from our data prep for later</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> pca.fit_transform(weights)</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>embedding_df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'word'</span> : vocab,</span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x0'</span>   : weights[:,<span class="dv">0</span>],</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x1'</span>   : weights[:,<span class="dv">1</span>]</span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-56" class="cell" data-execution_count="138">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> model3.get_layer(<span class="st">'embedding'</span>).get_weights()[<span class="dv">0</span>] <span class="co"># get the weights from the embedding layer</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>vocab <span class="op">=</span> vectorize_layer.get_vocabulary()                <span class="co"># get the vocabulary from our data prep for later</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> pca.fit_transform(weights)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>embedding_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'word'</span> : vocab,</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x0'</span>   : weights[:,<span class="dv">0</span>],</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x1'</span>   : weights[:,<span class="dv">1</span>]</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, we can use a plotly scatterplot to visualize these relationships:</p>
-<div id="cell-59" class="cell" data-outputid="f078fc07-d877-49e6-9977-323a4a7aa86d" data-execution_count="131">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(embedding_df,</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                 x <span class="op">=</span> <span class="st">"x0"</span>,</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> <span class="st">"x1"</span>,</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                 size <span class="op">=</span> <span class="bu">list</span>(np.ones(<span class="bu">len</span>(embedding_df))),</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>                 size_max <span class="op">=</span> <span class="dv">5</span>,</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>                 hover_name <span class="op">=</span> <span class="st">"word"</span>,</span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">'Word Embeddings Visualization'</span>)</span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>    xaxis<span class="op">=</span><span class="bu">dict</span>(title<span class="op">=</span><span class="st">'Principal Component 1'</span>),</span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>    yaxis<span class="op">=</span><span class="bu">dict</span>(title<span class="op">=</span><span class="st">'Principal Component 2'</span>),</span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-59" class="cell" data-outputid="14ade5b0-0cc2-477c-dbeb-cfb1e01d47a9" data-execution_count="140">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(embedding_df,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                 x <span class="op">=</span> <span class="st">"x0"</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> <span class="st">"x1"</span>,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                 size <span class="op">=</span> <span class="bu">list</span>(np.ones(<span class="bu">len</span>(embedding_df))),</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                 size_max <span class="op">=</span> <span class="dv">5</span>,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>                 hover_name <span class="op">=</span> <span class="st">"word"</span>,</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">'Word Embeddings Visualization'</span>)</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    xaxis<span class="op">=</span><span class="bu">dict</span>(title<span class="op">=</span><span class="st">'Principal Component 1'</span>),</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    yaxis<span class="op">=</span><span class="bu">dict</span>(title<span class="op">=</span><span class="st">'Principal Component 2'</span>),</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_131.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_140.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 <p>In the visualization, words that are close together might have similar semantic meanings or play a significant role in distinguishing between real and fake news. For example, “god,” “elections,” and “donald” are all closely grouped on the lower half of the center vertical axis and “gay,” “transgender,” and “democrat” are grouped near the center on the horizontal axis which might suggest that the model might classify them as having similar semantic meanings. These are often topics that are grouped together because of the political meanings they are associated with, so it would not be surprising if these are often found in articles together.</p>
 </section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion:</h3>
+<p>In conclusion, natural language processors and text classification can be a powerful tool for determining if an article contains fake news or not. Model3 resulted in a 97.46% test accuracy using both the article title and the article text. This was achieved by using Functional API features such as shared layers and multiple inputs and by using embeding and word processing to define the semantic relationships between different words.</p>
+
+
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion:</h2>
-<p>In conclusion, natural language processors and text classification can be a powerful tool for determining if an article contains fake news or not. Model3 resulted in a 98% test accuracy using both the article title and the article text. This was achieved by using Functional API features such as shared layers and multiple inputs and by using embeding and word processing to define the semantic relationships between different words. So in answer to the original question, it is most effective to focus on both the title and text to determine if an article is fake news.</p>
-
-
 </section>
 
 </main> <!-- /main -->
