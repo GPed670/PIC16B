@@ -1894,9 +1894,6 @@ def preprocess(images_arr):
 <p>If the recipes variable exists and contains items than this lines % for recipe in recipes % , loop iterates over each item in recipes, note each item in the loop is referred to as recipe.</p>
 Inside the loop, a div class=“recipe”&gt;…
 </section></section></section></main></div>
-Recipes
-
-<div id="recipes">
 <pre><code>{% if recipes %}
     {% for recipe in recipes %}
     &lt;div class="recipe"&gt;
@@ -1908,8 +1905,8 @@ Recipes
 {% else %}
     &lt;p&gt;{{ message }}&lt;/p&gt;
 {% endif %}</code></pre>
-</div>
-<p>{% endblock %} ’’’ ``` :::</p>
+
+<p>``` :::</p>
 <p>Here is what the recipe list page looks like. Once users submit preferences they will be redirected to the same page as the recipe page from above. Again when clicking a recipe they will be redirected to the recipe website.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
