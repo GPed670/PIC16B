@@ -1892,21 +1892,16 @@ def preprocess(images_arr):
 <p>The div id=“recipes”&gt;…&lt;/div” encloses the entire section of the code that deals with displaying the recipes or a message in case there are no recipes to display. It is important to note that the id=“recipes” attribute is used to uniquely identify this division in the document, which can be useful for styling or scripting purposes.</p>
 <p>Next up % if recipes % is a Jinja2 conditional statement that checks if there is a recipes variable available and it has a truthy value (e.g., a non-empty list). If recipes is truthy, the block of code inside this condition is executed.</p>
 <p>If the recipes variable exists and contains items than this lines % for recipe in recipes % , loop iterates over each item in recipes, note each item in the loop is referred to as recipe.</p>
-Inside the loop, a div class=“recipe”&gt;…
-</section></section></section></main></div>
-<pre><code>{% if recipes %}
-    {% for recipe in recipes %}
-    &lt;div class="recipe"&gt;
-        &lt;h2&gt;&lt;a href="{{ recipe.URL }}"&gt;{{ recipe.Name }}&lt;/a&gt;&lt;/h2&gt;
-
-        &lt;p class="key-ingredients"&gt;{{ recipe.key_ingredients}}&lt;/p&gt;
-    &lt;/div&gt;
-    {% endfor %}
-{% else %}
-    &lt;p&gt;{{ message }}&lt;/p&gt;
-{% endif %}</code></pre>
-
-<p>``` :::</p>
+<p>Inside the loop, a div class=“recipe”&gt;…&lt;/div is defined for each recipe. Within this divsion we displays the recipe’s name and links to the recipe’s URL. The recipe.Name and recipe.URL are placeholders that get replaced with the actual name and URL of the recipe, respectively, as provided by the recipes variable. A paragraph (p) with the class “key-ingredients” that displays the key ingredients of the recipe. The recipe.key_ingredients placeholder is replaced with the actual key ingredients data. Lastly , else is executed if recipes is falsy (e.g., an empty list or None). It renders a paragraph (p) displaying a message, which is provided by the message variable. To end the if-else conditional look we use endif</p>
+<div id="cell-61" class="cell" data-outputid="d4aa560b-74a6-484d-f059-d73b6eb4222d" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Here is what the recipe list page looks like. Once users submit preferences they will be redirected to the same page as the recipe page from above. Again when clicking a recipe they will be redirected to the recipe website.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1915,9 +1910,9 @@ Inside the loop, a div class=“recipe”&gt;…
 </figure>
 </div>
 <p>Finally, the recommended recipes are rendered on the recipe result page for the user to explore. This page allows users to explore the recipes from different cuisines without needing to upload any images, in the case that they do not have any ingredients.</p>
-
-
-
+</section>
+</section>
+</section>
 <section id="ethical-considerations" class="level1">
 <h1>Ethical Considerations</h1>
 <p>As a recipe recommender app, the goal was to tailor a list of recipes to the user’s preferences and commonly used ingredients. This approach, while efficient, risks skewing recommendations toward certain cuisines, potentially limiting diversity. To mitigate such bias, we allowed users to actively select their preferred cuisines during the initial sign-in process. This step ensures the algorithm aligns with user preferences, eliminating the risk of unwanted biases.</p>
@@ -1935,7 +1930,7 @@ Inside the loop, a div class=“recipe”&gt;…
 
 </section>
 
- <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -2318,7 +2313,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
- <!-- /content -->
+</div> <!-- /content -->
 
 
 
